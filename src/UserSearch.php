@@ -6,11 +6,23 @@ class UserSearch
 {
     private $pdo;
 
+    /**
+     * UserSearch constructor.
+     * @param \PDO $pdo
+     * 
+     * @return void
+     */
     public function __construct(\PDO $pdo)
     {
         $this->pdo = $pdo;
     }
 
+    /**
+     * Search users by name
+     * 
+     * @param string $name
+     * @return array
+     */
     public function searchByName(string $name): array
     {
         // Vulnerable: SQL Injection
@@ -20,7 +32,12 @@ class UserSearch
         return $stmt->fetchAll(\PDO::FETCH_ASSOC);
     }
 
-    // Versión segura para comparar
+    /**
+     * Search users by name
+     * 
+     * @param string $name
+     * @return array
+     */
     public function searchByNameSafe(string $name): array
     {
         $query = "SELECT * FROM users WHERE name LIKE :name";
